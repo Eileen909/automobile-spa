@@ -1,23 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import CarShow from "./CarShow";
+import { useState } from "react";
+
+function getRandomCar() {
+  let cars = ['sedan', 'suv', 'truck', 'convertible', 'hatchback', 'coupe'];
+  return cars[Math.floor(Math.random() * cars.length)];
+}
 
 function App() {
+  const [cars, setCars] = useState([]);
+  
+  const handleClick = () => {
+    setCars([...cars, getRandomCar()]);
+  };
+
+  const renderedCars = cars.map((car, index) => {
+    return <CarShow type={car} key={index} />;
+  });
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <button onClick={handleClick}>Add Car</button>
+      <div className="car-list">{renderedCars}</div>
     </div>
   );
 }
